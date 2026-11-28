@@ -1,0 +1,50 @@
+server/.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.DS_Store
+._*
+
+# 各機械の設定とデータ（config.yml には秘密の値が入る。手で取った控えも入れない）
+server/config.yml
+server/config.yml.bak*
+server/config.yml.save*
+server/config.yml.*.bak
+server/data/
+
+# 開発用インストール（pip install -e）が作るもの
+server/packages/*/*.egg-info/
+
+# 外部ツール（read_tsprogram・FFmpeg・CM 解析の3つなど）は install.sh で入れる。入れ方だけ置く
+/server/thirdparty/*
+!/server/thirdparty/install.sh
+
+# 公開しない物（アプリ・テストと運用の sh・メモ・計画・調査・使っていない物）。中は別の git
+/ts_tag_bridge_others/
+
+# アプリの Web 版を既定の置き場（apps/app/dist。config.yml の web_dir で変えられる）に置いた時に入れない
+/apps/*/node_modules/
+/apps/*/dist/
+/apps/*/.expo/
+/apps/*/web-build/
+/apps/*/ios/
+/apps/*/android/
+
+# ルートの workspace 依存と、packages のテストが作る一時物
+/node_modules/
+/packages/*/.vitest/
+
+# アドオンは入れない。書き方の説明だけ置く
+/server/addon/*
+!/server/addon/README.md
+
+# 手元の道具の設定（読む場所が決まっているので ts_tag_bridge_others へは移さない）
+CLAUDE.md
+AGENTS.md
+.claude/
+
+# hardening: nested deps & secrets
+node_modules/
+.env
+.env.*

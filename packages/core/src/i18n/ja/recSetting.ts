@@ -1,0 +1,28 @@
+import type { Messages } from '../translate';
+
+export const recSetting = {
+  'recSetting.recSettingForm.presetChoosingOneFills': 'プリセット — 選択すると下の全項目に値が反映されます',
+  'recSetting.recSettingForm.manual': '（手動設定）',
+  'recSetting.recSettingForm.specifiedService': '指定サービス',
+  'recSetting.recSettingForm.allServices': '全サービス',
+  'recSetting.recSettingForm.1Low': '1 (低)',
+  'recSetting.recSettingForm.4High': '4 (高)',
+  'recSetting.recSettingForm.followEventRelay': 'イベントリレー追従',
+  'recSetting.recSettingForm.yes': 'する',
+  'recSetting.recSettingForm.no': 'しない',
+  'recSetting.recSettingForm.exact': 'ぴったり(?)',
+  'recSetting.recSettingForm.recordingMargin': '録画マージン',
+  'recSetting.recSettingForm.custom': '個別指定',
+  'recSetting.recSettingForm.startS': '開始(秒)',
+  'recSetting.recSettingForm.endS': '終了(秒)',
+  'recSetting.recSettingForm.captionEtcServiceConversion': '字幕等ｻｰﾋﾞｽ変換',
+  'recSetting.recSettingForm.partialReception': '部分受信',
+  'recSetting.recSettingForm.rebootAfterResume': '復帰後再起動',
+  'recSetting.recSettingForm.recordingFolderBlankUses': '録画フォルダ — 空欄でEDCBデフォルト',
+  'recSetting.recSettingForm.outputWritePlug': '出力(書き出し)PlugIn',
+  'recSetting.recSettingForm.fileNamePlug': 'ファイル名PlugIn',
+  'recSetting.recSettingForm.fileNameOptionRecname': 'ファイル名オプション(recName) — 空欄でプラグインに渡さない',
+  'recSetting.recSettingForm.postRecording': '録画後実行BAT',
+  'recSetting.recSettingForm.tag': 'BATタグ',
+  'recSetting.form.current': '現在の設定値',
+} satisfies Messages;

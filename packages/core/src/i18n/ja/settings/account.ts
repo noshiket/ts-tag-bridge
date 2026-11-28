@@ -1,0 +1,28 @@
+import type { Messages } from '../../translate';
+
+export const settingsAccount = {
+  'settings.account.login': 'ログインユーザー',
+  'settings.account.admin': 'ADMIN — 全ユーザー管理可能',
+  'settings.account.logout': 'ログアウト',
+  'settings.account.server': '接続先サーバー',
+  'settings.account.serverNote': 'この端末に記録しています。ログアウトしても次のログイン画面に入ります',
+  'settings.account.changeServer': 'サーバーを変える（ログアウトします）',
+  'settings.account.changeServerConfirm': 'サーバーを変えるにはログアウトします。ログイン画面でサーバーの URL を書き換えてください。',
+  'settings.account.language': '表示言語',
+  'settings.account.languageNote': '番組名・曲名などの中身は元のまま。訳の無い所は日本語で出します',
+  'settings.account.theme': '表示テーマ',
+  'settings.account.accent': 'アクセント',
+  'settings.account.progress': '進捗表示',
+  'settings.account.listView': '一覧の表示',
+  'settings.account.pageSize': '一覧の表示件数',
+  'settings.account.listView.reserve': '予約',
+  'settings.account.listView.rec': '録画結果',
+  'settings.account.listView.album': 'アルバム',
+  'settings.account.pageSize.note': '予約 / 録画結果 / エンコード / アルバム / ビデオ / 自動予約 / マイリスト / 続きを見る / 勢い の1ページ件数',
+  'settings.account.pageSize.account': '既定（アカウント設定・全端末に同期）',
+  'settings.account.pageSize.device': 'この端末だけ変える（端末キャッシュに保存）',
+  'settings.account.pageSize.followDefault': '既定に従う',
+  'settings.account.pageSize.current': '現在の表示件数: {n}件（{where}）',
+  'settings.account.pageSize.whereDevice': 'この端末の設定',
+  'settings.account.pageSize.whereAccount': 'アカウント既定',
+} satisfies Messages;

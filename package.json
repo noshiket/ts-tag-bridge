@@ -1,0 +1,12 @@
+{
+  "name": "ts-tag-bridge",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "web": "npm run web -w @tstag/app",
+    "export:web": "npm run export:web -w @tstag/app",
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  }
+}

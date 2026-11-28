@@ -1,0 +1,25 @@
+import type { Messages } from '../../translate';
+
+export const libraryAlbumSheets = {
+  'library.albumSheets.moved': '{v0}/{v1} 件を移動しました',
+  'library.albumSheets.changedFileNamesChanged': '{v0}/{v1} 件を変更しました（ファイル名も変えたもの {v2}件）',
+  'library.albumSheets.changeFailed': '変更に失敗しました',
+  'library.albumSheets.moveAllVideos': '配下の動画をまとめて移動',
+  'library.albumSheets.changeAllVideos': '配下の{v0}本をまとめて変更',
+  'library.albumSheets.current': '現在',
+  'library.albumSheets.newFolderName': '新しいフォルダ名',
+  'library.albumSheets.newSeriesName': '新しいシリーズ名',
+  'library.albumSheets.movesMp4TagJson': 'mp4・tag.json・サムネをまとめて移動し、DBのフォルダと、フォルダと同名のカテゴリも書き換えます。「!」などはパス上では全角(！)になります。',
+  'library.albumSheets.rewritesSeriesNameTag': 'tag.json とDBのシリーズ名を書き換え、シリーズ名が入っているファイル名も合わせて変えます。フォルダ(アルバム名)は動きません。「!」などはファイル名では全角(！)になります。',
+  'library.albumSheets.moving': '移動中…',
+  'library.albumSheets.changing': '変更中…',
+  'library.albumSheets.move': '移動する',
+  'library.albumSheets.change': '変更する',
+  'library.albumSheets.deleteAllVideos': 'ビデオを全削除',
+  'library.albumSheets.deleteDbFolders': 'DBとフォルダごと消す',
+  'library.albumSheets.cantUndone': '⚠ この操作は取り消せません',
+  'library.albumSheets.ofVideos': 'の動画',
+  'library.albumSheets.folders': '対象フォルダ: {v0}',
+  'library.albumSheets.typeAlbumNameConfirm': '確認のためアルバム名を入力してください',
+  'library.albumSheets.deleteVideos': '{v0}本を削除する',
+} satisfies Messages;

@@ -1,0 +1,27 @@
+import type { Messages } from '../../translate';
+
+export const settingsBasicSections = {
+  'settings.basicSections.recordingEncodingServers': '録画とエンコードのサーバー',
+  'settings.basicSections.recordsAmatsukazeEncodesUse': '録画する EDCB と、エンコードする Amatsukaze。「接続テスト」で届くか確かめられます',
+  'settings.basicSections.tcpUrl': 'TCP の URL',
+  'settings.basicSections.storageWorkingFolders': '保存先と作業の場所',
+  'settings.basicSections.whereEncodedVideosSaved': 'エンコードした動画の保存先',
+  'settings.basicSections.destinationsChoosePerRecording': '録画ごとに選べる保存先の一覧。「状態更新」で空きと、つながっているかを見られます',
+  'settings.basicSections.temporaryWorkingFolders': '作業用の一時フォルダ',
+  'settings.basicSections.usedTopBottomMoves': '上から順に使う。空きが足りなければ次へ回す（1番目はアップロード等の置き場にもなる）',
+  'settings.basicSections.fileNaming': 'ファイル名の決め方',
+  'settings.basicSections.behavior': '動き',
+  'settings.basicSections.skipDuplicateReservations': '重複した予約を飛ばす',
+  'settings.basicSections.dontRecordIfParsed': '解析した題名・話数（局も）が持っている動画と全部同じなら、録画しない',
+  'settings.basicSections.cmAnalysisLoad': 'CM 解析の重さ',
+  'settings.basicSections.runsAutomaticallyWhenRecording': '録画を登録した時に自動で走る。熱が気になる時は控えめ',
+  'settings.basicSections.audioAnalysisLoad': '音声解析の重さ',
+  'settings.basicSections.captionImportMusicImport': '字幕・弾幕の取り込み、音楽の取り込み、波形',
+  'settings.basicSections.liveStreaming': 'ライブ配信',
+  'settings.basicSections.use': '使う EDCB',
+  'settings.basicSections.none': '(未選択)',
+  'settings.basicSections.ffmpeg': 'FFmpeg（CPU）',
+  'settings.basicSections.nccIntel': 'QSVEncC（Intel）',
+  'settings.basicSections.ncc': 'NVEncC（NVIDIA）',
+  'settings.basicSections.ncc2': 'VCEEncC（AMD）',
+} satisfies Messages;

@@ -1,0 +1,28 @@
+import type { Messages } from '../../translate';
+
+export const libraryMusicSheets = {
+  'library.musicSheets.added': '「{v0}」に追加しました',
+  'library.musicSheets.addPlaylist': 'プレイリストへ追加: {v0}',
+  'library.musicSheets.create': '作成',
+  'library.musicSheets.tracks': '  {v0}曲',
+  'library.musicSheets.addPlaylist2': 'プレイリストへ追加',
+  'library.musicSheets.existingPlaylistNewOne': '既存のプレイリスト、または新規作成',
+  'library.musicSheets.removePlaylist': 'このプレイリストから外す',
+  'library.musicSheets.trackItselfIsntDeleted': '曲自体は消えません',
+  'library.musicSheets.filterableTracksTab': '曲タブで絞り込めます',
+  'library.musicSheets.removeFavorites': 'お気に入りから外す',
+  'library.musicSheets.addFavorites': 'お気に入りに追加',
+  'library.musicSheets.deleteOfflineCopy': 'ローカル保存を削除',
+  'library.musicSheets.removesDeviceTrackStays': 'この端末から消します（曲は残ります）',
+  'library.musicSheets.deletedOfflineCopy': 'ローカル保存を削除しました',
+  'library.musicSheets.keepDeviceListenOffline': 'この端末に置いて通信なしで聴く',
+  'library.musicSheets.startedSavingOffline': 'ローカル保存を開始しました',
+  'library.musicSheets.viewEditTagJson': 'tag.json を見る / 直す',
+  'library.musicSheets.editArtistAlbumYear': 'アーティスト・アルバム・年などを直接編集',
+  'library.musicSheets.deleteTrack': '曲を削除',
+  'library.musicSheets.deletesFileToo': 'ファイルごと消します',
+  'library.musicSheets.delete': '「{v0}」を削除します。よろしいですか?',
+  'library.musicSheets.deleted': '削除しました',
+  'library.musicSheets.wherePut': '「{v0}」の置き場所',
+  'library.musicSheets.notFolderTopLevel': 'フォルダに入れない（一番上）',
+} satisfies Messages;

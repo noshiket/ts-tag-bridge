@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "text_parser"
+version = "0.1.0"
+description = "番組名・番組情報のパターン解析と、しょぼいカレンダーへの問い合わせ"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31",
+    "beautifulsoup4>=4.12",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["text_parser*"]

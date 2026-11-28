@@ -1,0 +1,25 @@
+import type { Messages } from '../../translate';
+
+export const settingsFederationSection = {
+  'settings.federationSection.serverFederation': 'サーバー間連携',
+  'settings.federationSection.serversName': 'このサーバーの名前',
+  'settings.federationSection.nameShownOtherServer': '相手のサーバーの画面に出る名前。分かりやすい名前なら何でもよい',
+  'settings.federationSection.eGLivingRoom': '例: リビングのサーバー',
+  'settings.federationSection.chooseSharedSecret': '合言葉を決める',
+  'settings.federationSection.useSameValueEvery': '連携するサーバーすべてで同じ値にします。「生成」で作り、「コピー」して相手のサーバーの同じ欄にも貼ってください',
+  'settings.federationSection.sharedSecretBetweenServers': 'サーバー間の合言葉',
+  'settings.federationSection.copySecret': '合言葉をコピー',
+  'settings.federationSection.savedSecretCantShown': '保存した合言葉は見えません。相手に入れる値が分からなくなったら、「生成」で作り直して両方に入れ直してください',
+  'settings.federationSection.notSetYet': 'まだ決めていません',
+  'settings.federationSection.sendEncodedVideosAnother': 'エンコードした動画を別のサーバーへ送る（任意）',
+  'settings.federationSection.fillingAddsMasterSend': 'ここを埋めると、録画の保存先に「master（送り先へ送信）」が出ます。それを選んだ動画は、エンコードの後に送り先のライブラリへ送られます',
+  'settings.federationSection.destinationName': '送り先の名前',
+  'settings.federationSection.destinationsName': '送り先の ① の名前',
+  'settings.federationSection.destination': '送り先の URL',
+  'settings.federationSection.openDestinationsApp': '送り先のアプリを開く時の URL',
+  'settings.federationSection.verifyCertificate': '証明書を確かめる',
+  'settings.federationSection.normallyOffOnlySelf': 'ふつうはオン。自分で作った証明書の時だけオフ',
+  'settings.federationSection.viewAnotherServersGuide': '別のサーバーの番組表・予約・録画をここで見る（任意）',
+  'settings.federationSection.addServersViewThen': '見たいサーバーを足します。足すと、画面の下のサーバーのボタン（自サーバー）を押すたびに、そのサーバーへ切り替えられます',
+  'settings.federationSection.twoMoreServersGather': '2台以上のサーバーで、エンコードした動画を片方へ集めたり、別のサーバーの番組表・予約・録画をここから見たりできます。上から順に決めてください。',
+} satisfies Messages;

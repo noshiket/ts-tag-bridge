@@ -1,0 +1,28 @@
+quart>=0.20
+uvicorn>=0.29
+requests>=2.31
+beautifulsoup4>=4.12
+ariblib
+pydantic>=2.0
+pyyaml>=6.0
+ruamel.yaml>=0.18
+grapheme
+av>=14.0
+opencv-python-headless>=4.9,<5
+numpy>=1.26
+# numba: CMカット解析のシーンチェンジ検出(tools/chapterexe_py/mvec.py)用。
+# 16x16ブロックの SAD 探索は純Pythonだと1フレーム数百秒かかる(C++のSSE版は全体3.66秒)。
+# 原典を逐語移植したコードのまま JIT できるので、ベクトル化のために書き換えずに済む。
+numba>=0.60
+PyJWT>=2.8
+aiofiles>=23.0
+bcrypt>=4.0
+aiohttp>=3.9
+# biim: MPEG-TS / HLS muxing（録画再生ストリーミング用、tsukumijima 氏フォーク wheel）
+biim @ https://github.com/tsukumijima/biim/releases/download/v1.11.0-post1/biim-1.11.0.post1-py3-none-any.whl
+# 別プロジェクト（server/thirdparty/read_tsprogram・server/packages/text_parser）。server/ をカレントにして入れる。
+# read_tsprogram は別リポジトリなので、先に thirdparty/install.sh --readtsprogram で取る（scripts/setup.sh はそうしている）。
+# compat: フォルダをそのまま読み込み先に足す方式。子プロセス（python -m tools.* や
+# read_tsprogram/arib_ts2json.py の直接起動）からも同じものが読める
+-e ./thirdparty/read_tsprogram --config-settings editable_mode=compat
+-e ./packages/text_parser --config-settings editable_mode=compat

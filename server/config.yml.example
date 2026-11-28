@@ -1,0 +1,199 @@
+# ts-tag-bridge サーバー設定サンプル
+# このファイルを config.yml にコピーして編集してください。
+# 起動した後は設定の API（アプリの設定画面）からも編集できます（一部は保存後に再起動が必要）。
+
+# APIサーバー
+port: 8082
+# バインドアドレス。省略時 0.0.0.0（全インターフェース）
+# host: "0.0.0.0"
+
+# データの置き場（DB・パターン・サムネ・アドオンの設定など）。空なら server/data。相対パスは server/ から。
+# 変える時はサーバーを止めて中身を移してから。再起動で反映
+# data_dir: ""
+
+# アプリの Web 版の置き場（書き出した dist）。サーバーが / で配る。空なら apps/app/dist。相対パスは server/ から。再起動で反映
+# web_dir: ""
+
+# ログ（設定の画面からも変えられ、再起動なしで当たる）
+# log_debug: true で調べ物用の行も出す（毎分のアドオン実行・エンコードの進み具合・各段の細かい完了・
+# 時間の計測・アクセスログなど）。既定は false（出来事と異常だけ）
+# log_debug: false
+# log_file: true でファイルにも書く（再起動しても残る。10MB×5本まで）。既定は false
+# log_file: false
+# 書くファイル。空なら server/data/logs/server.log
+# log_file_path: ""
+
+# JWT(ログイン)署名鍵。未設定だと既定値のまま運用され危険なので、必ず固有の値を設定する。
+# openssl rand -hex 32 で生成するか、設定画面の「生成」ボタンで作成できる。変更後は再起動が必要
+# （変更した瞬間に全ユーザーのログインセッションが無効になるため、メモリには即時反映しない）。
+jwt_secret: ""
+
+# HTTPS / HTTP2 化（Akebi リバースプロキシを前段に置く）
+# enabled: true にすると {port} を Akebi が HTTPS で待ち受け、本体は backend_port（127.0.0.1）で動く。
+# 既定では Akebi の作者が置く Keyless サーバーで *.local.konomi.tv の正規証明書を使うため、
+# https://192-168-x-xx.local.konomi.tv:8082/ でアクセスすると警告なしで HTTPS/HTTP2 になる。
+https:
+  enabled: true
+  # 本体（uvicorn）が待つポート。HTTPS を使うなら必須。port とは別のポートにする
+  backend_port: 8092
+  keyless_server_url: "https://akebi.konomi.tv/"
+  # akebi_path: ""              # 省略時 thirdparty/Akebi/akebi-https-server
+  # custom_certificate: ""      # 任意: 自前の証明書を使う場合（指定すると keyless は不使用）
+  # custom_private_key: ""
+
+# FFmpegツールパス
+ffmpeg: "/usr/bin/ffmpeg"
+ffprobe: "/usr/bin/ffprobe"
+
+# EDCBサーバー（複数対応）
+# encode_link: 連携するエンコーダーのURL（amatsukaze_servers の url と一致させる）
+# encode_type: エンコーダー種別（amatsukaze）
+edcb_servers:
+  - name: "myserver"
+    url: "http://myserver:5510"
+    tcp_url: "tcp://myserver:4510"
+    encode:
+      - encode_type: amatsukaze_servers
+        name: "myserver_amatsukaze"
+    volumes:
+      - host: /mnt
+        target: /mnt
+
+# Amatsukazeサーバー（複数対応）
+amatsukaze_servers:
+  - name: "myserver_amatsukaze"
+    url: "http://myserver:32769"
+    volumes:
+      - host: /
+        target: /host-rootfs
+    encode_preset:
+      # 使えるプレースホルダ:
+      #   {$tmp_base}      下の tmp_base を**コンテナから見たパス**に直したもの
+      #                    (上の volumes で変換。例 /home/user/tmp → /host-rootfs/home/user/tmp)
+      #   {$tmp_base_host} 同じく tmp_base だがホストのパスそのまま
+      #   {$tmp_dirs}      その話数の一時ディレクトリ名(トークン)
+      #   {$任意のカラム名} recordings の値(title / folder など)
+      - name: "cmcut"
+        input_ts: "{$tmp_base}/{$tmp_dirs}/cut.ts"
+        outputs:
+            dstPath: "{$tmp_base}/{$tmp_dirs}/output"
+            profile: "QSVEnc-HEVC"
+            priority: 3
+        # mode:"Batch" / "Test" / "DrcsCheck" / "CMCheck"
+        mode: "Test"
+        add_queue_bat: ""
+
+# その他サービス（edcb/amatsukaze の volumes マッピングを置く場合に使用）
+services: {}
+
+# このサーバー自身のボリュームマッピング（Docker内で動かす場合のみ設定）
+volumes: []
+
+# 一時ファイル置き場（TS分割・エンコード作業ディレクトリ。federation の受信ステージングもここ配下）
+tmp_base: "/home/user/tmp"
+# アプリのミニプレイヤー(再生中に戻った時に出る帯)の高さ(px)。40〜200。既定 64
+mini_player_height: 64
+
+# しょぼいカレンダーの bot 利用規約(https://docs.cal.syoboi.jp/rule/bot/): User-Agent に入れる連絡先（URL かメールアドレス）。
+# 空ならこのアプリの案内のページ（下の URL）を入れる
+shoboi_contact: "https://github.com/noshiket/ts-tag-bridge"
+output_path: "{$encode_dir}/{$folder}/[{$service_name}]{$title}_#{$episode_number}_{$setting}{$start_time}{$ext}"
+
+# text_parser に渡す追加コンテキスト変数（任意のキーと値）
+# パターン内で $変数名 として参照可能
+# 注: encode_dir はここに置かない。app_output_path 内の {$encode_dir} は
+#     リテラルのまま保持され、エンコードのファイルコピー時に encode_dir_list で
+#     選択した値へ置換される。
+text_parser_context:
+  ext: ".mp4"
+
+# エンコード出力先候補（録画詳細で選択する）
+# HDD など取り外し可能なディスクに分散保存する用途。
+# app_output_path 内の {$encode_dir} がファイルコピー時にここで選択した値へ置換される。
+# 録画詳細で未選択の録画は先頭（[0]）がデフォルトとして使われる。
+encode_dir_list:
+  - "/mnt/encoded1"
+  - "/mnt/encoded2"
+
+# サーバー間連携（他ノードで録画+エンコードした成果物をこのサーバーへ転送して再生する）
+# ライブラリサーバー側(受信側): node_id と fed_token（受信側の認証用共有シークレット）を設定する。
+# リモートノード側(送信側): 追加で library_peer（転送先ライブラリサーバー）を設定する。
+# fed_token 未設定時は /api/fed/* は常に401（機能OFF）。library_peer 未設定時は push しない。
+# encode_dir="master" が指定されたエンコードだけが library_peer へ送信される
+# （送信側ノードでは新規録画のencode_dirデフォルトが自動的に"master"になる）。
+# fed_tokenは/api/nodes/<name>/...経由でのAPI中継(予約・番組表・自動予約等の閲覧/操作)にも
+# 使われるため、両ノードで一致させる共有シークレットとして扱うこと（設定変更/再起動等の
+# 管理APIはこのトークンでは操作できない）。
+# text_parserのパターン(番組タイトル解析ルール)は、library_peer/remote_nodesが設定されて
+# いる限り、追加/更新/削除の都度どちらのノードからでも自動的に相手ノードへ反映される
+# （双方向）。既存パターンをまとめて揃えたい場合は設定画面から一括同期を実行する。
+federation:
+  node_id: "myserver"
+  fed_token: ""   # openssl rand -hex 32 などで生成した共有シークレットを両ノードに設定
+  # library_peer:
+  #   name: "librarysrv"
+  #   url: "https://192-168-x-xx.local.konomi.tv:8082"
+  #   verify_tls: true
+  # remote_nodes:   # このサーバーから番組表・予約・自動予約を閲覧/操作したいノードを登録
+  #   - name: "remotesrv"
+  #     url: "https://192-168-x-yy.local.konomi.tv:8082"
+
+# デフォルトタイムレンジ
+
+# ワーカーポーリング間隔（秒）
+phase_a_interval: 120
+phase_b_interval: 60
+# スキャンワーカー（pending録画の直列スキャン）のtick間隔。省略時は 30。
+phase_b_scan_interval: 30
+# エンコードディスパッチワーカー（pending encodingを1件ずつ直列実行）のtick間隔。省略時は 30。
+phase_c_interval: 30
+
+# HDD負荷軽減: EDCBの録画中がこの本数以上の間は、スキャンワーカーが重い add_recording
+# スキャン（drop check/TSスキャン/ffprobe/サムネ）を先送りして同時録画の DROP を防ぐ。
+# PhaseB の INSERT（録画一覧の最新化）は defer 中も継続する。先送り分は負荷が下がった
+# 次tickで自動処理される。省略時は 2。0 で無効（録画中も即スキャン）。
+phase_b_defer_recordings: 2
+
+# エンコード(Amatsukaze)実行中もスキャンを先送りするか。true にするとエンコードと
+# スキャンの CPU 競合は減るが、エンコードキューが常時埋まる運用ではスキャンが恒久的に
+# 止まるため既定 false（エンコード中も即スキャン）。
+phase_b_defer_during_encode: false
+
+# ドロップ相関デバッグ: true でドロップ発生時刻(tot_time)を add_recording の
+# スキャン区間と突き合わせ、このサーバー自身のスキャンがDROPを誘発したかを
+# server/data/drop_debug.log に出力する。原因切り分け期間のみ有効化する。省略時は false。
+drop_debug: false
+
+# エンコード履歴の上限。encode_end の encodings がこの数を超えると、エンコード完了の
+# たびに古い順に削除する（tmp_dir も削除。他 encoding が参照しない参照元TSは
+# .program.txt/.err・サムネ・recordings 行ごと削除し EDCB のみ残す）。省略/0 で無効。
+encode_history_limit: 200
+
+# 番組/録画の保持日数。PhaseA が1時間毎に以下を自動削除する（EDCB の録画済み情報は残す）:
+#   - EDCB上でスキップ(録画無効)のまま放送期間が終了した番組(programs)
+#   - 放送終了がこの日数より古い番組(録画が紐づくものは除外)
+#   - 放送開始がこの日数より古く、参照元TSファイルが消失している録画
+#     (DB行+サムネ+子エンコードを削除。外付けディスク取り外し中は対象外)
+# 省略時 10。0 で無効。
+program_retention_days: 10
+
+# ライブストリーミング設定
+streaming:
+  edcb_server: "myserver"
+  encoder: "QSVEncC"     # FFmpeg / QSVEncC / NVEncC / VCEEncC / rkmppenc（scripts/setup.sh が GPU を見て聞く）
+  max_alive_time: 10
+  # ffmpeg: ""             # 任意: ライブ配信専用の ffmpeg/ffprobe パス上書き
+  # ffprobe: ""
+
+# 録画登録スキャン時に CM カット解析(logic/cmcut.py)を走らせるか。
+# 分割画面のシークバーに CM 位置を出すためのもの。30分番組で2分前後かかり
+# 4コアを使い切るので、録画が重なる時間帯に影響するなら false にする。
+cmcut_on_scan: true
+# 急がない解析の重さ（low=控えめ / normal=ふつう / high=全力）。省略時は low。
+# 録画・エンコード・配信を同じ機械でやる時に取り切ると、応答が落ち、熱でも落ちる。
+# 中身は logic/encoding/load_weights.py（優先度・負荷の上限・並列数に置き換える）
+cmcut_weight: low       # CM 解析
+audio_sync_weight: low  # 音声解析（字幕・弾幕の取り込み、音楽の取り込み、波形）
+# 数字で決めたい時だけ書く（書いた項目は上の重さより優先）
+# cmcut_workers: 2     # ロゴ走査と mvec の並列数
+# cmcut_nice: 10       # 子プロセスの優先度を下げる量（0 で無効）
